@@ -1,0 +1,219 @@
+{% extends 'mainapp/main_base.html' %}
+{% load static %}
+
+
+{% block head %}
+<title>当当-分类浏览</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/header_150803.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/category_pub.css' %}" />
+
+<script type="text/javascript">
+    function goto_page() {
+        var num = document.getElementById('t__cp').value;
+        location.href = "{% url 'mainapp:booklist' %}?cates={{ cates }}&num="+num;
+    }
+
+
+    function add_book(book_id,amount){
+        var xhr = new XMLHttpRequest();
+        xhr.open('get',"{% url 'cartapp:cart_add' %}?book_id="+book_id+"&amount="+amount,true);
+        xhr.send();
+        xhr.onreadystatechange=function () {
+            if(xhr.readyState==4 && xhr.status==200){
+                if(xhr.responseText){
+                    alert('添加成功！')
+                }
+            }
+        }
+    }
+</script>
+
+{% endblock %}
+
+
+
+{% block body %}
+<div id="bd_auto" name="9149">
+  <div class="breadcrumb" id="B"> <a href="{% url 'mainapp:home' %}">当当</a> <span>&gt;</span> <a href="{% url 'mainapp:booklist' %}?cates={{ cate_one.id }}" name="B">{{ cate_one.title }}</a>
+      {% if cate_two != '0' %}
+        <span>&gt;</span> <a href="{% url 'mainapp:booklist' %}?cates={{ cate_two.id }}" name="B">{{ cate_two.title }}</a>
+      {% endif %}
+                
+  </div>
+  <div class="col aside" name="4931">
+    <div class="" name="m142905_pid0_t4824">
+      <div class="col storey_one_left" name="9163">
+      <div class="sidemenu" name="m403752_pid0_t9141" dd_name="左侧分类" ddt-area="mix_403752" ddt-floor="mix_403752">
+        <div class="con flq_head" >图书分类</div>
+        <div class="con flq_body" >
+
+            {#目录部分#}
+            {% for cate in cate_parents %}
+            <div class="level_one"  >
+                <dl class="primary_dl" >
+                    <dt><span> <a  class="" href="{% url 'mainapp:booklist' %}?cates={{ cate.id }}" target="_blank">{{ cate.title }} </a> </span></dt>
+                    <dd class="dd_level1">
+                      {% for cate_son in cate_sons %}
+                          {% if cate_son.parent_id == cate.id %}
+                            <a target="_blank" href="{% url 'mainapp:booklist' %}?cates={{ cate_son.id }}">{{ cate_son.title }}</a> &emsp;
+                          {% endif %}
+                    </dd>
+                      {% endfor %}
+                </dl>
+            </div>
+            {% endfor %}
+
+
+        </div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+    </div>
+   
+  </div>
+  <div class="col article">
+    
+    <div class="bk_sort" name="Sort">
+                  <div id="component_281329"></div>
+                  <div class="con tools_box">
+        <div class="con top">
+                      <div class="col ">
+            <div class="t" >排序：</div>
+            <ul class="sorting_box" name="Sort" id="sort_ul" >
+              <li class="" id="issue">
+                <div onclick="gotom('issue')" title="默认排序" >默认排序</div>
+              </li>
+              <li class="" id="sales">
+                <div name="Xl" onclick="gotom('sales')" title="销量由高到低" >销量<span class="icon"></span></div>
+              </li>
+              <li class="" id="dangdang_price">
+                <div name="Jg" onclick="gotom('dangdang_price')" title="价格由低到高" >价格<span class="icon icon_t"></span></div>
+              </li>
+              <li class="" id="publishing_time">
+                <div name="OT" onclick="gotom('publishing_time')" title="出版时间由近到远" >出版时间<span class="icon"></span></div>
+              </li>
+            </ul >
+
+            <script type="text/javascript">
+                function gotom(method){
+                    location.href = "{% url 'mainapp:booklist' %}?cates={{ cates }}&num={{ page.number }}&sort="+method
+                }
+                document.getElementById('{{ sort }}').className = 'on'
+            </script>
+
+            </div>
+{#          右上部分的上一页&下一页#}
+          <div class="col ">
+            <div class="data" name="Fy">共<span>{{ page.paginator.count }}</span>个商品
+
+{#      上一页#}
+        {% if page.has_previous %}
+            <a href="{% url 'mainapp:booklist' %}?cates={{ cates }}&num={{ page.previous_page_number }}" class="arrow_l"></a>
+        {% else %}
+            <a class="arrow_l" ></a>
+        {% endif %}
+
+            <span class="or">{{ page.number }}</span><span>/{{ page.paginator.num_pages }}</span>
+
+{#      下一页#}
+        {% if page.has_next %}
+            <a href="{% url 'mainapp:booklist' %}?cates={{ cates }}&num={{ page.next_page_number }}" class="arrow_r arrow_r_on"></a>
+        {% else %}
+            <a class="arrow_l" ></a>
+        {% endif %}
+
+
+            </div>
+          </div>
+         </div>
+      </div>
+    </div>
+  </div>
+  <div class="book_shoplist" dd_utopia="on" name="Product">
+    <div id="component_2963524"></div>
+    <div class="con shoplist">
+      <ul class="list_aa listimg" id="component_0__0__3058">
+
+
+
+        {% for item in page %}
+        <li class="line{{ forloop.counter }}" id="23668351">
+          <div class="inner"> <a title=" {{ item.name }} " class="pic" href="{% url 'mainapp:detail' %}?id={{ item.id }}" target="_blank"><img src="{{ item.face }}" alt=" {{ item.name }} "></a>
+            <p class="name"><a title=" {{ item.name }} " href="{% url 'mainapp:detail' %}?id={{ item.id }}" target="_blank"> {{ item.name }} </a></p>
+            <p class="star"><span class="level"><span style="width: 100%;"></span></span><a href="#" target="_blank" name="P_pl">{{ item.review }}条评论</a></p>
+            <div class="publisher_info">
+              <p class="author"><span></span><a href="#" name="P_zz" title="{{ item.author }}">{{ item.author }}</a></p>
+              <p class="publishing_time"><span></span>/ {{ item.publishing_time|date:'Y年m月d日' }} </p>
+              <p class="publishing"><span></span>/ <a href="#" name="P_cbs" title="{{ item.publishing_house }}">{{ item.publishing_house }}</a></p>
+            </div>
+            <p class="detail"> 1、「一个」app人气冠军，90后实力写作者，继年度畅销书《你是**的自己》后，张皓宸全新力作，带来温暖人心的个人故事集。12个温馨治愈的情感故事，给年轻人爱的正能量和信心。电影版权火热接洽中，不久的将来你将会在大屏幕上再次与这些故事相逢。
+                          
+                          
+                          2、张皓宸的文字，在微博、豆瓣、人人等文艺平台广受欢迎，百万微博粉丝，他的文字被阅读过100，000，000次，在微博被累计转发1，000，000次，在「一个」app上被分享收藏超过2，000，000次，他的作品被人民日报、人民网微博多次转载，成为90后作家中的励志榜样，给无数年轻人带去力量。
+                          
+                          
+                          3、韩寒监制并微博推荐，「一个」工作室开年力作，重磅主打&nbsp;。 
+                          
+                          
+                          4、这本书可以送给自己，亦可作为礼物，送给你在乎的人，有了ta，世界才完整。随书附赠张皓宸私密手写寄语明信片。
+                          
+                          
+                          5、内文插画元素由张皓宸亲自手绘，摄影图由「一个」app众多优秀首页图作者提供，装帧设计由「一个」工作室王牌设计师陆骏璇倾情打造。 </p>
+            <p class="dang" style="display: block;">当当自营</p>
+            <p class="buy_button"><a class="listbtn_info" name="area_buy" dd_name="查看详情" href="{% url 'mainapp:detail' %}?id={{ item.id }}" >查看详情</a></p>
+            <p class="price"> <span class="price_n">￥{{ item.dangdang_price }}0</span><a style="color: #878787;text-decoration:none;">定价：</a><span class="price_r">￥{{ item.price }}0</span>(<span class="price_s">{% widthratio item.dangdang_price item.price 10 %}折</span>)</p>
+            <div class="ebook_buy">
+              <p class="buy_button"><a class="listbtn_buy" id="A13" dd_name="加入购物车" href="javascript:void(0)" name="Buy" onclick="add_book({{ item.id }},1)"></a></p>
+            </div>
+            <p class="subtitle"> （一个App人气冠军张皓宸全新个人故事集，温馨治愈的情感故事，让你在面对爱时无惧，怀疑爱时坚定。随书附赠张皓宸私密手写寄语明信片） </p>
+          </div>
+        </li>
+        {% endfor %}
+
+
+
+      </ul>
+    </div>
+    <div class="" name="m2963520_pid0_t3989"><div id="component_2963520"></div><div class="con paginating" name="m2963520_pid0_t3990">
+    <ul class="paging" name="Fy">
+{#        上一页#}
+        {% if page.has_previous %}
+            <li class="prev"><a href="{% url 'mainapp:booklist' %}?cates={{ cates }}&num={{ page.previous_page_number }}">上一页</a></li>
+        {% else %}
+            <li class="prev none"><a >上一页</a></li>
+        {% endif %}
+
+{#        所有页#}
+        {% for page_num in page.paginator.page_range|slice:"0:6" %}
+            {% if page_num == page.number %}
+                <li><a href="{% url 'mainapp:booklist' %}?cates={{ cates }}&num={{ page_num }}" class="current">{{ page_num }}</a></li>
+            {% else %}
+                <li><a href="{% url 'mainapp:booklist' %}?cates={{ cates }}&num={{ page_num }}" class="null">{{ page_num }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+{#        下一页#}
+        {% if page.has_next %}
+            <li class="next"><a href="{% url 'mainapp:booklist' %}?cates={{ cates }}&num={{ page.next_page_number }}">下一页</a></li>
+        {% else %}
+            <li class="next none"><a >下一页</a></li>
+        {% endif %}
+
+
+
+        <li class="page_input"><span>共{{ page.paginator.num_pages }}页 到第</span>
+            <input id="t__cp" type="text" class="number" value="{{ page.paginator.num_pages }}">
+            <span>页</span>
+            <input class="button" id="click_get_page" value="确定" type="button" onclick="goto_page()"></li>
+    </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+

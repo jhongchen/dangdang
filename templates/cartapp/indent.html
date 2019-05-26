@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>当当 - 确认订单</title>
+<script src="../../static/js/jquery1.4.2.js" type="text/javascript"></script>
+    <link href="../../static/css/shopping_cart_new.css" rel="stylesheet" type="text/css">
+	<link href="../../static/css/footer_150526.css" rel="stylesheet" type="text/css" />
+    <link href="../../static/css/header_960_150611.css" rel="stylesheet" type="text/css">
+    <script src="../../static/js/pagetop2015_0827.js" charset="gb2312" type="text/javascript"></script>
+
+    
+    <script type="text/javascript">
+
+        //处理订单创建失败的函数
+        window.onload=function(){
+            var order_fail = document.getElementById('state').value;//生成订单的状态值
+            if(order_fail === true){
+{#                alert('订单创建失败，请稍后再试')#}
+            }
+        };
+
+        //
+{#        function remove(that,info_id){#}
+{#            //ajax同步购物车列表#}
+{#            var xhr = new XMLHttpRequest();#}
+{#            xhr.open('get','{% url "cartapp:cart_remove" %}?info_id='+info_id,true);#}
+{#            xhr.send();#}
+{##}
+{#            //页面节点操作#}
+{#            var table = document.getElementById('cart');#}
+{#            table.removeChild(that.parentNode.parentNode);   //删除目标子节点tr#}
+{#            var price = that.parentNode.previousSibling.previousSibling.lastChild;//目标订单项的总价#}
+{#            var price1 = document.getElementById('price1');//购物车总价(应付总额)#}
+{#            var price2 = document.getElementById('price2');//购物车总价(小计总额)#}
+{#            console.log(price1,price2,price);#}
+{#            new_price = price1.innerText*1 - price.innerText*1;#}
+{#            price1.innerText = new_price;#}
+{#            price2.innerText = new_price#}
+{#        }#}
+    </script>
+
+    
+    
+    
+    <script type="text/javascript">
+        function fn1(){
+            console.log(123);
+            var z=document.getElementById('myaddress');
+            var d=z.selectedIndex;
+            var t=z.options[d].text;
+            {% for i in address %}
+                var x= '{{ i.address }}';
+                if (x===t){
+                    var  a='{{ i.m_phone }}';
+                    var b='{{ i.phone }}';
+                    if (a=='None'){
+                         a=''
+                    }else {
+                    b=''
+                }
+
+                }
+                document.getElementById('ship_man').value = '{{ i.ship_man }}';
+                document.getElementById('address').value = '{{ i.address }}';
+                document.getElementById('postcode').value = '{{ i.postcode }}';
+                document.getElementById('m_phone').value = a;
+                document.getElementById('phone').value = b;
+            {% endfor %}
+        }
+    </script>
+</head>
+<input type="hidden" value="{{ state }}" id="state">
+<body style="padding-bottom:82px">
+<div id="hd">
+<div id="tools">
+<div class="tools">
+    <div class="ddnewhead_operate" dd_name="顶链接">
+        <div class="ddnewhead_welcome" display="none;">
+            <span id="nickname"><span class="hi">
+                Hi，<a href="" class="login_link" target="_blank"><b>{{ username }}</b></a>
+                <a href="{% url 'userapp:loginout' %}" target="_self">[退出]</a>
+            </span></span>
+        </div>
+    </div>
+</div>
+</div>
+<div id="header_end"></div></div>
+<form action="{% url 'pay_ok'%}" id="bootpagetopSearch" name="bootpagetopSearch" method="post">
+{% csrf_token %}
+<div class="shoppingcart_wrapper" id="ad_cpt_11850"><div><img src="../../static/images/2017011111344969879.jpg"></div></div>
+<div class="logo_line">
+    <div class="w960">
+        <div class="shopping_procedure01 shopping_procedure "><span>我的购物车</span><span class="current">填写订单</span><span>完成订单</span></div>
+        <div class="logo"><a href="#"><img src="../../static/images/bz_logo_car.jpg" alt=""></a></div>
+    </div>
+</div>
+<div class="add_line" id="district">
+    <div class="w960">
+        <div class="address1" id="dp_adress">
+            <span class="icon_ad">&nbsp;</span>
+        </div>
+    </div>
+</div>
+<div class="indent_con">
+	<div class="shdz">
+    	<h3>收货相关信息</h3>
+        <ul class="shdz_con">
+            <p>▪ 收货地址</p>
+            <li><label><strong>*</strong>我的地址：</label>
+            <div class="select_add">
+                <select class="text fn-select-address" name="address" id="myaddress" onclick="fn1()">
+                {% for a in address %}
+                    <option value="{{ a.id }}">{{ a.address }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            </li>
+        	<li><label><strong>*</strong>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</label>
+                <input type="text" name="ship_man" value="{{ username }}" onblur="namecheck(this)" id="ship_man">
+                <span id="spn_ship_man1" class="hint new_tip" style="display: block;"></span>
+            </li>
+            <li><label><strong>*</strong>详细地址：</label>
+                <input type="text" name="address" id="address" onblur="addresscheck(this)" >
+                <span id="spn_ship_man2" class="hint new_tip" style="display: block;"></span>
+            </li>
+            <li><label><strong>*</strong>邮政编码：</label>
+                <input type="text" name="postcode" onblur="postcheck(this)" id="postcode" >
+                <span id="spn_ship_man3" class="hint new_tip" style="display: block;"></span>
+            </li>
+            <li><label><strong>*</strong>手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机：</label>
+                <input type="text" name="m_phone" onblur="phonenumber()" id="m_phone">
+                <label>或&nbsp;&nbsp;固定电话</label>
+                <input type="text" name="phone" onblur="phonenumber()" id="phone">
+                <span id="spn_ship_man4" class="hint new_tip" style="display: block;"></span>
+            </li>
+        </ul>
+        <script type="text/javascript">
+
+
+
+
+
+
+            function namecheck(that){
+                if(that.value === ''){   //buweik
+                    that.nextSibling.nextSibling.innerText = '收货人姓名不能为空';
+                }else{
+                    that.nextSibling.nextSibling.innerText = 'ok';
+                }
+            }
+
+            function addresscheck(that){
+                if(that.value === ''){  //buweik
+                    that.nextSibling.nextSibling.innerText = '收货地址不能为空';
+                }else{
+                    that.nextSibling.nextSibling.innerText = 'ok';
+                }
+            }
+
+            function postcheck(that){
+                if(!/^[0-9]{6}$/.test(that.value)){  //6wei
+                    that.nextSibling.nextSibling.innerText = '请输入正确的邮编';
+                }else{
+                    that.nextSibling.nextSibling.innerText = 'ok';
+                }
+            }
+
+
+            function phonenumber(){
+                var tip = document.getElementById('spn_ship_man1');
+                var m_num = m_phone();
+                var num = phone();
+                if( m_num==='' && num===''){
+                    tip.innerText = '手机号和电话号至少填写一个'
+                }else if(m_num === 1 || num === 1){
+                    tip.innerText = 'ok'
+                }else{
+                    tip.innerText = '请检查输入号码的格式'
+                }
+            }
+
+            function m_phone(){
+                var num = document.getElementById('m_phone').value; //1开头11wei
+                if(num === ''){
+                    return ''
+                }else if(!/^1[0-9]{10}$/.test(num)){
+                    return 0
+                }else{
+                    return 1
+                }
+            }
+
+            function phone(){
+                var num = document.getElementById('phone').value;
+                if(num === ''){
+                    return ''
+                }else if(!/^[0-9]{7}$/.test(num)){  //7wei
+                    return 0
+                }else{
+                    return 1
+                }
+            }
+
+
+        </script>
+
+
+    <script>
+{#           function addre() {#}
+{#             var aman=document.getElementById('spn_ship_man1');#}
+{#             var aadress=document.getElementById('spn_ship_man2');#}
+{#             var apostcode=document.getElementById('spn_ship_man3');#}
+{#             var aphone=document.getElementById('spn_ship_man4');#}
+{#             var xhr = new XMLHttpRequest();#}
+{#             xhr.open('get',"{% url 'userapp:yz'%}?a="+a);#}
+{#             xhr.send();#}
+{#            }#}
+
+{#        function addre() {#}
+{#            var xhr=new XMLHttpRequest()#}
+{#            xhr.open('get',"{%  %}")#}
+{#        }#}
+
+    </script>
+<div class="balance"><p class="yfze">应付总额：<em>¥</em><em id="price1">{{ cart.dangdang_price }}</em></p>
+            <p><a href="javascript:{document.forms[0].submit()}" onclick="addre()">提交订单</a></p></div>
+    </div>
+    <div class="shdz">
+    	<h3>订单1（百知网配送）</h3>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tbody id="cart">
+                <tr style="height:30px; line-height:30px;">
+                    <th width="34%">商品名称</th>
+                    <th width="11%">所在仓库</th>
+                    <th width="13%">百知价</th>
+                    <th width="11%">原价</th>
+                    <th width="9%">数量</th>
+                    <th width="11%">小计</th>
+                    <th width="11%">操作</th>
+                </tr>
+{#================订单项列表================#}
+                {% for info in cart.lst %}
+                    {% if info.state == True%}
+                    <tr>
+                        <td>{{ info.name }}</td>
+                        <td align="center">沙河仓库</td>
+                        <td align="center">¥{{ info.dangdang_price }}</td>
+{#                        （{% widthratio info.dangdang_price info.price 10 %}折）#}
+                        <td align="center">¥{{ info.price }}</td>
+                        <td align="center">{{ info.amount }}</td>
+                        <td align="center">¥<span>{{ info.total_price }}</span></td>
+                        <td align="center"><a href="javascript:void(0)" onclick="remove(this,{{ info.id }})">放回购物车</a></td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+
+
+                    <tr>
+                        <td class="table_zj" colspan="3"><strong>小计总额：</strong><em>¥</em><em id="price2">{{ cart.dangdang_price }}</em></td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+</form>
+<div id="footer">
+<div class="footer">
+	<div class="footer_nav_box">
+		<div class="footer_copyright"><span>Copyright (C) 当当网 2004-2014, All Rights Reserved</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001051000098" target="_blank" class="footer_img" rel="nofollow"><img src="http://img4.dangdang.com/bottom/validate.gif"></a><span><a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">京ICP证041189号</a></span><span>出版物经营许可证&nbsp;新出发京批字第直0673号</span></div>
+	</div>
+</div>
+</div>
+    <div class="foot_tip_ad">广告</div>
+    <style>
+        .foot_tip_ad { width:40px; height:40px; font:12px/40px "simsun"; text-align:center; color:#fff; background-color:#474747; position:fixed; right:0; bottom:10px;_position:absolute; _bottom:auto;_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));}
+    </style>
+
+
+</body>
+</html>
+

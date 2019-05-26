@@ -1,0 +1,489 @@
+{% extends 'mainapp/main_base.html' %}
+{% load static %}
+{% block head %}
+    <title>当当网-首页</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/theme_1.css' %}"/>
+    <link rel="Stylesheet" type="text/css" href="{% static 'css/home.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index-style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header_150803.css' %}"/>
+{% endblock %}
+
+
+{% block body %}
+
+<div id="bd_auto" name="9149">
+  <div class="con storey_one" name="9150">
+    <div class="col storey_one_left" name="9163">
+      <div class="sidemenu" name="m403752_pid0_t9141" dd_name="左侧分类" ddt-area="mix_403752" ddt-floor="mix_403752">
+        <div class="con flq_head" >图书分类</div>
+        <div class="con flq_body" >
+
+
+            {% for cate in cates %}
+            <div class="level_one"  >
+                <dl class="primary_dl" >
+                    <dt><span> <a  class="" href="{% url 'mainapp:booklist' %}?cates={{ cate.id }}" target="_blank">{{ cate.title }} </a> </span></dt>
+                    <dd class="dd_level1">
+                      {% for cate_son in cate_sons %}
+                          {% if cate_son.parent_id == cate.id %}
+                            <a href="{% url 'mainapp:booklist' %}?cates={{ cate_son.id }}">{{ cate_son.title }}</a> &emsp;
+                          {% endif %}
+                    </dd>
+                      {% endfor %}
+                </dl>
+            </div>
+            {% endfor %}
+
+
+        </div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+    <div class="col storey_one_center" name="9164">
+      <div class="fl_w" >
+        <div id="banner_tabs" class="flexslider">
+          <ul class="slides">
+            <li> <a href="http://www.yuloo.com/slschool/gjgz/"> <img src="/static/images/zjpx750x315_lyx_1216.jpg" width="750" height="315" alt=""> </a> </li>
+            <li> <a href="http://www.yuloo.com/slschool/international/"> <img src="/static/images/750x315wen0103.jpg" width="750" height="315" alt=""> </a> </li>
+            <li> <a href="http://www.yuloo.com/slschool/Primary/"> <img src="/static/images/750x3151.jpg" width="750" height="315" alt=""> </a> </li>
+            <li> <a href="http://www.yuloo.com/slschool/junior/"> <img src="/static/images/750x315_djj_1230.jpg" width="750" height="315" alt=""> </a> </li>
+          </ul>
+          <ul class="flex-direction-nav">
+            <li><a class="flex-prev">Previous</a></li>
+            <li><a class="flex-next">Next</a></li>
+          </ul>
+          <ul id="bannerCtrl" class="flex-control-nav flex-control-paging">
+            <li class="active"><a></a></li>
+            <li><a></a></li>
+            <li><a></a></li>
+            <li><a></a></li>
+          </ul>
+          <div class="adver_icon"></div>
+        </div>
+      </div>
+      <!-- End 焦点图 -->
+      <div class="bys clearfix">
+        <div class="book_online_title" name="m403754_pid5292_t9125"></div>
+        <script type="text/javascript">
+		$(function(){
+			$('#slides01').slides({
+				effect: 'slide01'
+			});
+		})
+	    </script>
+        <div id="slides01" class="center_shop clearfix">
+          <div class="auto1 clearfix" >
+            <ul class="slides_container clearfix">
+
+{#            新书上架#}
+            {% for page in new %}
+              <li>
+                  {% for item in page %}
+                    <dl class="clearfix">
+                      <dt><a class="img" href="{% url 'mainapp:detail' %}?id={{ item.id }}" target="_blank"><img src="{{ item.face }}" alt=""></a></dt>
+                      <dd>
+                        <p class="name" ><a title="" href="{% url 'mainapp:detail' %}?id={{ item.id }}" target="_blank" style=" ">{{ item.extend }}</a></p>
+                        <p class="author"><span class="author_t"></span>{{ item.author }}  著</p>
+                        <p class="price"><span class="rob"><span class="sign">￥</span><span class="num">{{ item.dangdang_price }}</span><span class="tail">0</span></span><span class="price_r"><span class="sign">￥</span><span class="num">{{ item.price }}</span><span class="tail">0</span></span></p>
+                        <span style="background: url(http://img4.ddimg.cn/00035/pic/xsq.png) no-repeat 0px 0px; _background-image: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://img4.ddimg.cn/00035/pic/xsq.png',sizingMethod='noscale');" class="product_tags"></span></dd>
+                    </dl>
+                  {% endfor %}
+                </li>
+            {% endfor %}
+
+
+
+            </ul>
+            <a href="#" class="prev">prev</a> <a href="#" class="next">next</a> </div>
+        </div>
+      </div>
+    </div>
+    <div class="col storey_one_right" name="9165">
+      <div class="con " name="9166">
+
+        <div class="spacer"></div>
+      </div>
+      <script type="text/javascript" src="/static/js/jquery-latest.js"></script>
+      <script type="text/javascript" src="/static/js/slides.min.jquery.js"></script>
+      <div><a href="#"><img src="/static/images/199x178ts720.jpg" width="240" height="195" /></a></div>
+
+      <script type="text/javascript">
+    function player1(id){
+    var id=document.getElementById(id)
+    id.style.display="block";
+    }
+    function clocer1(id){
+    var id=document.getElementById(id)
+    id.style.display="none";
+    }
+    </script>
+    <div style="margin-top:14px; margin-bottom:23px;"><a href="#"><img src="../../static/images/1yuan240-120.jpg" width="240" height="105" /></a></div>
+      <div class="con " name="9168">
+        <div class="con title" name="m403757_pid0_t9121"> <a nname="book-65152-9168_1-473546_1" href="http://bang.dangdang.com/books/newhotsales/01.00.00.00.00.00-recent7-0-0-1-1" target="_blank" title="新书热卖榜" class="hot_link" ddt-pit="text_1" ddt-src="http://bang.dangdang.com/books/newhotsales/01.00.00.00.00.00-recent7-0-0-1-1">新书热卖榜</a> </div>
+        <div class="head01">
+          <ul class="tab_aa">
+            <li id="two1" onmouseover="setTab('two',1,5)" class="hover"><a href="#" target="_blank" ><span>总榜</span></a></li>
+          </ul>
+        </div>
+        <div class="bor_list_con">
+          <div  id="con_two_1" style="display:block;" >
+            <ul class="list01">
+
+
+            {#右上榜单#}
+              {% for item in hots %}
+              <li>
+              {% if  forloop.counter <= 3 %}
+                <span class="num num1">
+                  {% else %}
+                  <span class="num">
+              {% endif %}
+                {{ forloop.counter }}</span>
+                <div> <a class="list_name" href="{% url 'mainapp:detail' %}?id={{ item.id }}">{{ item.name }}:{{ item.extend }}</a>
+                  <dl class="list_con clearfix">
+                    <dt><a href=""><img src="{{ item.face }}" /></a></dt>
+                    <dd>
+                      <p class="name"><a href="#">{{ item.name }}：{{ item.extend }}</a></p>
+                      <b>￥{{ item.dangdang_price }}0</b><em>￥{{ item.price }}0</em><a class="pl" href="#">{{ item.review }}条评论</a></dd>
+                  </dl>
+                </div>
+              </li>
+              {% endfor %}
+
+
+
+            </ul>
+          </div>
+          <a href="#" target="_blank" title="查看完整榜单>>" class="more_top" ddt-pit="text_1" ddt-src="http://bang.dangdang.com/books/bestsellers/01.00.00.00.00.00-recent7-0-0-1-1"> 查看完整榜单&gt;&gt; </a> </div>
+      </div>
+      <script>$(document).ready(function() {
+            $list_li = $(".list01 li");
+            $list_li.eq(0).addClass("active");
+            $list_li.mouseover(function(){
+                $(this).addClass("active").siblings().removeClass("active");
+           });
+        });</script>
+      <style>
+		.list_name{ display:block;}
+		.list_con{ display:none;}
+		.active .list_con{ display:block;}
+		.active div .list_name{ display:none;}
+        </style>
+    </div>
+  </div>
+  <div class="con storey_two" name="9151">
+    <div class="col storey_two_left" name="9161">
+    <div class="book_online_title1" name="m403754_pid5292_t9125"></div>
+        <script type="text/javascript">
+		$(function(){
+			$('#slides02').slides({
+				effect: 'slide02'
+			});
+		})
+	    </script>
+        <div id="slides02" class="center_shop clearfix">
+          <div class="auto1 clearfix" >
+            <ul class="slides_container clearfix">
+
+{#            编辑推荐#}
+            {% for page in recoms %}
+              <li  >
+                  {% for item in page %}
+                    <dl class="clearfix">
+                      <dt><a class="img" href="#" target="_blank"><img src="{{ item.face }}" alt=""></a></dt>
+                      <dd>
+                        <p class="name" ><a title="" href="#" target="_blank" style=" ">{{ item.extend }}</a></p>
+                        <p class="author"><span class="author_t"></span>{{ item.author }}  著</p>
+                        <p class="price"><span class="rob"><span class="sign">￥</span><span class="num">{{ item.dangdang_price }}</span><span class="tail">0</span></span><span class="price_r"><span class="sign">￥</span><span class="num">{{ item.price }}</span><span class="tail">0</span></span></p>
+                        <span style="background: url(http://img4.ddimg.cn/00035/pic/xsq.png) no-repeat 0px 0px; _background-image: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://img4.ddimg.cn/00035/pic/xsq.png',sizingMethod='noscale');" class="product_tags"></span></dd>
+                    </dl>
+                  {% endfor %}
+              </li>
+            {% endfor %}
+
+
+
+            </ul>
+            <a href="#" class="prev">prev</a> <a href="#" class="next">next</a> </div>
+        </div>
+      <div class="spacer"></div>
+    </div>
+    <div class="col storey_two_right">
+      <div class="con " name="9168">
+        <div class="con title" name="m403757_pid0_t9121"> <a nname="book-65152-9168_1-473546_1" href="http://bang.dangdang.com/books/newhotsales/01.00.00.00.00.00-recent7-0-0-1-1" target="_blank" title="新书热卖榜" class="hot_link" ddt-pit="text_1" ddt-src="http://bang.dangdang.com/books/newhotsales/01.00.00.00.00.00-recent7-0-0-1-1">新书热卖榜</a> </div>
+        <div class="head01">
+          <ul class="tab_aa">
+            <li id="four1" onmouseover="setTab('four',1,5)" class=""><a href="#" target="_blank"><span>总榜</span></a></li>
+          </ul>
+        </div>
+        <div class="bor_list_con">
+          <div id="con_four_1">
+            <ul class="list01">
+
+{#          右下榜单#}
+              {% for item in hots %}
+              <li>
+                {% if  forloop.counter <= 3 %}
+                  <span class="num num1">
+                  {% else %}
+                  <span class="num">
+                {% endif %}
+                {{ forloop.counter }}</span>
+                <div> <a class="list_name" href="">{{ item.name }}:{{ item.extend }}</a>
+                  <dl class="list_con clearfix">
+                    <dt><a href=""><img src="{{ item.face }}" /></a></dt>
+                    <dd>
+                      <p class="name"><a href="#">{{ item.name }}：{{ item.extend }}</a></p>
+                      <b>￥{{ item.dangdang_price }}0</b><em>￥{{ item.price }}0</em><a class="pl" href="#">{{ item.review }}条评论</a></dd>
+                  </dl>
+                </div>
+              </li>
+              {% endfor %}
+
+            </ul>
+          </div>
+          <a href="#" target="_blank" title="查看完整榜单>>" class="more_top" ddt-pit="text_1" ddt-src="http://bang.dangdang.com/books/bestsellers/01.00.00.00.00.00-recent7-0-0-1-1"> 查看完整榜单&gt;&gt; </a> </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block bottom %}
+
+    <div class="sidebar_wrap" id="sidebar_wrap_id">
+  <div class="sidebar">
+    <div class="sale"> <a href="http://coupon.dangdang.com" target="_blank" dd_name="活动图片小图"> <img class="right_ad_pic" src="http://img61.ddimg.cn/2016/11/1/2016110120354244376.hpiabBPM" width="34" height="135"> </a> </div>
+    <div class="sidebar_top"> <a href="http://shopping.dangdang.com/shoppingcart/shopping_cart.aspx" class="cart" target="_blank" dd_name="购物车"><span style="left: 0px;">购物车</span><em style="text-align: center">0</em></a> <a href="javascript:void(0)" class="collect" dd_name="我的收藏"><span class="name" style="left: 0px;">我的收藏</span></a> <a href="javascript:void(0)" class="footprint" dd_name="我的浏览"><span class="name" style="left: 0px;">我的浏览</span></a> <a href="http://point.dangdang.com/index.html" target="_blank" class="sidebar_points" dd_name="我的积分"><span class="name" style="left: 0px;">我的积分</span></a> </div>
+    <div class="sidebar_b">
+      <div class="sidebar_code2"> <a href="javascript:void(0)" class="code2s"></a> <a href="" class="code2b" style="display:none"><img src="http://img62.ddimg.cn/f9229d67-4b33-47a6-b3b4-3a0490d513c7.hpMg2KFb"></a> </div>
+      <a href="javascript:void(0);" class="back_top" dd_name="返回顶部"><span class="name">返回顶部</span></a> <a href="http://survey.dangdang.com/html/2487.html" class="survey" target="_blank" dd_name="意见反馈"><span class="name">意见反馈</span></a> <span class="guanggao">广告</span> </div>
+  </div>
+
+  <!-- 右侧面板 -->
+  <div class="sidebar_open" id="my_collect" style="display:none"> </div>
+  <div class="sidebar_open" id="my_history" style="display:none"> </div>
+  <div class="sidebar_open" id="expand_content" style="display:none"> </div>
+
+  <!--右侧广告内容-->
+  <div id="expand_content_hidden" style="display:none"> </div>
+  <div id="collect_load_html" style="display:none">
+    <h4><a href="javascript:sidebar_open_close()" class="close">close</a>我的收藏</h4>
+    <div class="sidebar_loading">
+      <p>加载中请稍后</p>
+      <p><img src="http://img60.ddimg.cn/upload_img/00111/home/loading.gif"></p>
+    </div>
+  </div>
+  <div id="history_load_html" style="display:none">
+    <h4><a href="javascript:sidebar_open_close()" class="close">close</a>我浏览过的商品</h4>
+    <div class="sidebar_loading">
+      <p>加载中请稍后</p>
+      <p><img src="http://img60.ddimg.cn/upload_img/00111/home/loading.gif"></p>
+    </div>
+  </div>
+  <script>
+    var float_right_ajax_url = '/Standard/Framework/Core/hosts/get_right_float_data.php';
+    var collect_url = 'http%3A%2F%2Fwish.dangdang.com%2Fwishlist%2Fcust_wish_list.aspx';
+</script>
+</div>
+
+
+    <script>
+        $(function(){
+            /**
+             * 返回顶部
+             */
+            $('.back_top').click(function(){
+                $("html,body").animate({"scrollTop":"0"},500);
+            });
+
+            /**
+             * 二维码
+             */
+            $(".code2s").hover(function(){
+                $('.code2b').css('display','block');
+            },function(){
+                $('.code2b').css('display','none');
+            });
+
+            /**
+             * 右边栏购物车数量
+             */
+            var cart_items_count = getCookie_one("cart_items_count","");
+            if(cart_items_count ==""){cart_items_count = "0";}
+            var number = cart_items_count <= 99 ? cart_items_count : '99+';
+            $(".cart em").text(number);
+
+
+            /**
+             * 页头购物车数量
+             */
+            var CartCountHead=getCookie_one("cart_items_count","");
+            if(CartCountHead==""){CartCountHead = "0";}
+            var cartItemsCount_head=Number(CartCountHead);
+            if(isNaN(Number(cartItemsCount_head))){
+                cart_Count_head = "0";
+            }else{
+                cart_Count_head = CartCountHead;
+            }
+            if(cart_Count_head!=null&&cart_Count_head.length>0&&cart_Count_head!="undefined")
+            {
+                var cic_head=document.getElementById("cart_items_count_head");
+                if(cic_head!=''){
+                    cart_Count_head = cart_Count_head <= 99 ? cart_Count_head : '99+';
+                    cic_head.innerHTML= cart_Count_head;
+                }
+            }
+
+            /**
+             * 我的收藏
+             * 第一次加载时，会提示"加载中请稍后"
+             * 当加载过内容之后，就不再出现上述提示，之后就是对已加载过来的内容的显示与隐藏的操作
+             * 采用_.throttle（）方法是用来避免指定时间内用户频繁点击导致的频繁发送请求
+             * 这里设定了3秒，也就是说当用户触发了一次点击操作，此时不是立马发送请求，而是等待3秒，在这3秒内无论用户又触发了多少次操作，3秒之后，只发送一次请求
+             */
+            $(".collect").click(function(){
+                //判断是否登录
+                $.ajax({
+                    type: "GET",
+                    url: float_right_ajax_url,
+                    data: "action=is_login",
+                    complete :function(data){
+                        var data = data.responseText;
+                        if(data == 0){ //未登录
+                            showMsgBox('','','',show_collect_html);
+                        }else{
+                            //加上该class之后，才能将竖条向左移动指定距离
+                            if(!$("#sidebar_wrap_id").hasClass("sidebar_wrap_open")){
+                                $("#sidebar_wrap_id").addClass("sidebar_wrap_open");
+                            }
+
+                            //判断收藏div是否有数据，一般访问页面后第一次点击收藏按钮，div下会没有数据，此时给出友好提示"加载中请稍后"
+                            var my_collect_html = $("#my_collect").html();
+                            my_collect_html = $.trim(my_collect_html);
+                            if(my_collect_html == ""){
+                                $("#my_collect").html($("#collect_load_html").html());
+                            }
+
+                            //显示收藏div，隐藏足迹div和右侧展开内容div
+                            $("#my_collect").show();
+                            $("#my_history").hide();
+                            $("#expand_content").hide();
+
+                            //异步调取数据，但是会对调取频率进行控制
+                            show_my_collect();
+                        }
+                    }
+                });
+            });
+            var show_my_collect = _.throttle(function(){
+                //异步请求数据
+                $.ajax({
+                    type: "GET",
+                    url: float_right_ajax_url,
+                    data: "action=collect&collect_url="+collect_url,
+                    complete :function(data){
+                        var show_html = data.responseText;
+                        $("#my_collect").html(show_html); //对数据进行覆盖
+                    }
+                });
+            }, 3000);
+
+
+            /**
+             * 登录之后调用该函数进行收藏数据的加载
+             */
+            function show_collect_html(){
+                //加上该class之后，才能将竖条向左移动指定距离
+                if(!$("#sidebar_wrap_id").hasClass("sidebar_wrap_open")){
+                    $("#sidebar_wrap_id").addClass("sidebar_wrap_open");
+                }
+
+                //判断收藏div是否有数据，一般访问页面后第一次点击收藏按钮，div下会没有数据，此时给出友好提示"加载中请稍后"
+                var my_collect_html = $("#my_collect").html();
+                my_collect_html =  $.trim(my_collect_html);
+                if(my_collect_html == ""){
+                    $("#my_collect").html($("#collect_load_html").html());
+                }
+
+                //显示收藏div，隐藏足迹div和右侧展开内容div
+                $("#my_collect").show();
+                $("#my_history").hide();
+                $("#expand_content").hide();
+
+                //异步调取数据，但是会对调取频率进行控制
+                show_my_collect();
+            }
+
+
+            /**
+             * 我的足迹
+             * 第一次加载时，会提示"加载中请稍后"
+             * 当加载过内容之后，就不再出现上述提示，之后就是对已加载过来的内容的显示与隐藏的操作
+             * 采用_.throttle（）方法是用来避免指定时间内用户频繁点击导致的频繁发送请求
+             * 这里设定了3秒，也就是说当用户触发了一次点击操作，此时不是立马发送请求，而是等待3秒，在这3秒内无论用户又触发了多少次操作，3秒之后，只发送一次请求
+             */
+            $(".footprint").click(function(){
+                //加上该class之后，才能将竖条向左移动指定距离
+                if(!$("#sidebar_wrap_id").hasClass("sidebar_wrap_open")){
+                    $("#sidebar_wrap_id").addClass("sidebar_wrap_open");
+                }
+
+                //判断足迹div是否有数据，一般访问页面后第一次点击足迹按钮，div下会没有数据，此时给出友好提示"加载中请稍后"
+                var my_history_html = $("#my_history").html();
+                my_history_html =  $.trim(my_history_html);
+                if(my_history_html == ""){
+                    $("#my_history").html($("#history_load_html").html());
+                }
+
+                //显示足迹div，隐藏收藏div和右侧展开内容div
+                $("#my_history").show();
+                $("#my_collect").hide();
+                $("#expand_content").hide();
+
+                //异步调取数据，但是会对调取频率进行控制
+                show_my_history();
+            });
+
+            var show_my_history = _.throttle(function(){
+                //异步请求数据
+                $.ajax({
+                    type: "GET",
+                    url: float_right_ajax_url,
+                    data: "action=history",
+                    complete :function(data){
+                        var result = data.responseText;
+                        $("#my_history").html(result);  //对数据进行覆盖
+                    }
+                });
+            }, 3000);
+
+        });
+
+        /**
+         * hover展示大图
+         */
+        $(".sale").hover(function(){
+            $(this).find('.sale_big').css('display','block');
+        },function(){
+            $(this).find('.sale_big').css('display','none');
+        });
+
+
+        /**
+         * hover展示左侧提示区域
+         */
+        $(".sidebar_points,.sidebar_top .cart,.sidebar_top .collect,.sidebar_top .footprint,.sidebar_b .back_top").hover(function(){
+            $(this).addClass('on');
+            $(this).find('span').stop(true,false).animate({"left":"-79px"},200);
+        },function(){
+            $(this).removeClass('on');
+            $(this).find('span').stop(true,false).animate({"left":"0"},200);
+        });
+
+
+
+    </script>
+
+{% endblock %}
